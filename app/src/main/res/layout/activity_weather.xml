@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue"
+    tools:context=".WeatherActivity">
+
+    <TextView
+        android:id="@+id/city_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/poppins_regular"
+        android:includeFontPadding="false"
+        android:text="@string/amsterdam"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/search_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@id/temp_btn"
+        android:backgroundTint="#1E3150"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/search_for_a_city"
+        android:src="@drawable/baseline_search_24"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/desc_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/city_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_bold"
+        android:includeFontPadding="false"
+        android:text="Few Clouds"
+        android:textColor="#AFADAD"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/weather_degree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/desc_txt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="9dp"
+        android:fontFamily="@font/poppins_bold"
+        android:includeFontPadding="false"
+        android:text="@string/_12"
+        android:textColor="@color/white"
+        android:textSize="100sp" />
+    <TextView
+        android:id="@+id/feels_like_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weather_degree"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/poppins_bold"
+        android:includeFontPadding="false"
+        android:text="Feels like 11°C"
+        android:textColor="#AFADAD"
+        android:textSize="20sp" />
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:layout_marginHorizontal="30dp"-->
+<!--        android:id="@+id/search_layout"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_below="@id/city_name"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/city_search_input"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:visibility="gone"-->
+<!--            android:inputType="text"-->
+<!--            android:hint="@string/city"-->
+<!--            android:backgroundTint="#182742"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:fontFamily="@font/poppins_regular"/>-->
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <EditText
+        android:id="@+id/city_search_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@id/city_name"
+        android:layout_margin="20dp"
+        android:inputType="text"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:hint="@string/city"
+        android:background="@drawable/card_background"
+        android:textColor="@color/white"
+        android:fontFamily="@font/poppins_regular"/>
+
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        android:text="🚀"
+        android:backgroundTint="#182742"
+        android:textSize="25sp"
+        android:layout_below="@id/city_search_input"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:id="@+id/weather_sun"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@id/feels_like_txt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/weather_icon"
+        android:src="@drawable/sun" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/temp_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#1E3150"
+        android:contentDescription="@string/get_weather"
+        android:src="@drawable/get"
+        android:textColor="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/other_conditions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weather_sun"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="30dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/wind_speed_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#182742"
+            app:cardCornerRadius="20dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp">
+
+                <TextView
+                    android:id="@+id/wind_speed_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Wind speed"
+                    android:textColor="#AFADAD"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/wind_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/wind_speed_txt"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="- km/h"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/pressure_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Pressure"
+                    android:textColor="#AFADAD"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/pressure_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/pressure_txt"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="- hPa"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/humidity_txt_cap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/wind_speed"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/humidity"
+                    android:textColor="#AFADAD"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/humidity_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/humidity_txt_cap"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="- %"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/visibility"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/visibility_cap"
+                    android:layout_below="@id/pressure_val"
+                    android:textSize="15sp"
+                    android:textColor="#AFADAD"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/visibility"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/visibility_cap"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="- km"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

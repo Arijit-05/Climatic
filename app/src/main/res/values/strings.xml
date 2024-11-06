@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Weather_standalone</string>
+    <string name="app_name">Climatic</string>
     <string name="weather_app">Weather App</string>
     <string name="climatic">Climatic</string>
     <string name="weather_icon">Weather_icon</string>

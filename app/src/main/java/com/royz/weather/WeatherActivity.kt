@@ -15,6 +15,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.AnimationDrawable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -24,6 +25,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.github.matteobattilana.weather.PrecipType
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.json.JSONObject
@@ -58,6 +60,7 @@ class WeatherActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         textViewCity = findViewById(R.id.city_name)
         textViewTemp = findViewById(R.id.weather_degree)
@@ -74,9 +77,13 @@ class WeatherActivity : AppCompatActivity() {
         searchButton = findViewById(R.id.search_button)
         relativeLayout = findViewById(R.id.main)
 
+        val animationDrawable = relativeLayout.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(2500)
+        animationDrawable.setExitFadeDuration(5000)
+        animationDrawable.start()
+
         getWeatherBtn.setOnClickListener {
             fetchLocationAndWeather()
-            updateWeatherIcon()
         }
 
         searchFab.setOnClickListener {
@@ -97,9 +104,9 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateWeatherIcon() {
-        val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-        if (currentHour in 6..17) {
+    private fun updateWeatherIcon(sunrise: Long, sunset: Long) {
+        val currentTime = System.currentTimeMillis() / 1000
+        if (currentTime in sunrise until sunset) {
             weatherImageView.setImageResource(R.drawable.sun)
         } else {
             weatherImageView.setImageResource(R.drawable.moon)
@@ -142,6 +149,10 @@ class WeatherActivity : AppCompatActivity() {
                 val weatherArray = jsonObject.getJSONArray("weather")
                 val weatherDescription = weatherArray.getJSONObject(0).getString("description")
 
+                val sys = jsonObject.getJSONObject("sys")
+                val sunrise = sys.getLong("sunrise")
+                val sunset = sys.getLong("sunset")
+
                 textViewCity.text = cityName
                 textViewTemp.text = "${temperature.toInt()}°"
                 feelsLikeText.text = "Feels like ${feelsLike.toInt()}°C"
@@ -150,6 +161,8 @@ class WeatherActivity : AppCompatActivity() {
                 windSpeedTxt.text = "${windSpeed.toInt()} km/h"
                 visibilityTxt.text = "${(visibility/1000).toInt()} km"
                 descText.text = weatherDescription
+
+                updateWeatherIcon(sunrise, sunset)
             },
             { error ->
                 Toast.makeText(this, "Error fetching weather data", Toast.LENGTH_SHORT).show()
@@ -188,6 +201,10 @@ class WeatherActivity : AppCompatActivity() {
                 val weatherArray = jsonObject.getJSONArray("weather")
                 val weatherDescription = weatherArray.getJSONObject(0).getString("description")
 
+                val sys = jsonObject.getJSONObject("sys")
+                val sunrise = sys.getLong("sunrise")
+                val sunset = sys.getLong("sunset")
+
                 textViewCity.text = city
                 textViewTemp.text = "${temperature.toInt()}°"
                 feelsLikeText.text = "Feels like ${feelsLike.toInt()}°C"
@@ -197,6 +214,7 @@ class WeatherActivity : AppCompatActivity() {
                 visibilityTxt.text = "${(visibility / 1000).toInt()} km"
                 descText.text = weatherDescription
 
+                updateWeatherIcon(sunrise, sunset)
                 hideSearchBar()
             },
             { error ->

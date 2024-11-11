@@ -17,12 +17,13 @@
         android:layout_marginBottom="30dp"
         tools:ignore="UselessParent">
 
-        <ImageView
-            android:id="@+id/weather_icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/weather_icon" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:lottie_rawRes="@raw/weather"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            android:id="@+id/weather_icon" />
 
         <TextView
             android:id="@+id/climatic_txt"
@@ -57,7 +58,7 @@
             android:layout_below="@id/weather_app_txt"
             android:layout_centerHorizontal="true"
             android:layout_margin="20dp"
-            android:backgroundTint="#29B6F6"
+            android:backgroundTint="#1E3150"
             android:fontFamily="@font/poppins_regular"
             android:includeFontPadding="false"
             android:text=">"

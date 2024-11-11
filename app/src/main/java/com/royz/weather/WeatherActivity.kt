@@ -22,15 +22,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatDelegate
+import com.airbnb.lottie.LottieAnimationView
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.github.matteobattilana.weather.PrecipType
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.json.JSONObject
-import java.util.Calendar
-
 
 class WeatherActivity : AppCompatActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -38,7 +36,7 @@ class WeatherActivity : AppCompatActivity() {
     private lateinit var textViewTemp: TextView
     private lateinit var feelsLikeText: TextView
     private lateinit var getWeatherBtn: FloatingActionButton
-    private lateinit var weatherImageView: ImageView
+    private lateinit var weatherImageView: LottieAnimationView
     private lateinit var windSpeedTxt: TextView
     private lateinit var humidityTxt: TextView
     private lateinit var pressureTxt: TextView
@@ -48,6 +46,7 @@ class WeatherActivity : AppCompatActivity() {
     private lateinit var searchButton: Button
     private lateinit var relativeLayout: RelativeLayout
     private lateinit var descText: TextView
+    private lateinit var inst: TextView
     private val apiKey = "c94bc25e208769e0ab136e7ba146a1cd"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,6 +74,7 @@ class WeatherActivity : AppCompatActivity() {
         searchFab = findViewById(R.id.search_fab)
         citySearchInput = findViewById(R.id.city_search_input)
         searchButton = findViewById(R.id.search_button)
+        inst = findViewById(R.id.inst)
         relativeLayout = findViewById(R.id.main)
 
         val animationDrawable = relativeLayout.background as AnimationDrawable
@@ -84,11 +84,13 @@ class WeatherActivity : AppCompatActivity() {
 
         getWeatherBtn.setOnClickListener {
             fetchLocationAndWeather()
+            inst.visibility = View.GONE
         }
 
         searchFab.setOnClickListener {
             toggleSearchBar()
         }
+
 
         searchButton.setOnClickListener {
             val cityName = citySearchInput.text.toString()
@@ -107,10 +109,19 @@ class WeatherActivity : AppCompatActivity() {
     private fun updateWeatherIcon(sunrise: Long, sunset: Long) {
         val currentTime = System.currentTimeMillis() / 1000
         if (currentTime in sunrise until sunset) {
-            weatherImageView.setImageResource(R.drawable.sun)
+            weatherImageView.setAnimation(R.raw.sun_big)
+            val params = weatherImageView.layoutParams
+            params.width = (290 * resources.displayMetrics.density).toInt() // Convert dp to pixels
+            params.height = (250 * resources.displayMetrics.density).toInt() // Convert dp to pixels
+            weatherImageView.layoutParams = params
         } else {
-            weatherImageView.setImageResource(R.drawable.moon)
+            weatherImageView.setAnimation(R.raw.moon)
+            val params = weatherImageView.layoutParams
+            params.width = (200 * resources.displayMetrics.density).toInt() // Convert dp to pixels
+            params.height = (200 * resources.displayMetrics.density).toInt() // Convert dp to pixels
+            weatherImageView.layoutParams = params
         }
+        weatherImageView.playAnimation()
     }
 
     private fun fetchLocationAndWeather() {
